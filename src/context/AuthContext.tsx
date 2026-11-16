@@ -1,8 +1,8 @@
 // src/context/AuthContext.tsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User, AuthContextType } from '../types';
+import React, { createContext, useState } from 'react';
+import type { User, AuthContextType } from '../types';
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const TOKEN_KEY = 'auth_token';
 const USER_KEY = 'auth_user';
@@ -17,7 +17,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return localStorage.getItem(TOKEN_KEY) || null;
     });
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading] = useState<boolean>(false);
 
     const isAuthenticated = !!token && !!user;
 
@@ -40,12 +40,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             {children}
         </AuthContext.Provider>
     );
-};
-
-export const useAuth = (): AuthContextType => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error('useAuth debe ser utilizado dentro de un AuthProvider');
-    }
-    return context;
 };
