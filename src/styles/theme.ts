@@ -1,16 +1,16 @@
-import { Theme } from '@emotion/react';
+import type { Theme } from '@emotion/react';
 
 export const theme: Theme = {
     colors: {
-        primary: '#2563eb',
-        secondary: '#4f46e5',
-        background: '#f8fafc',
-        surface: '#ffffff',
-        text: '#0f172a',
-        textSecondary: '#64748b',
+        primary: '#00e054',       // Verde estilo Letterboxd
+        secondary: '#ff8000',     // Naranja cine
+        background: '#14181c',    // Fondo oscuro principal
+        surface: '#1f262e',       // Tarjetas y barras
+        text: '#ffffff',
+        textSecondary: '#9ab',
         error: '#ef4444',
-        success: '#10b981',
-        border: '#e2e8f0',
+        success: '#00e054',
+        border: '#2c3440',
     },
     spacing: {
         xs: '4px',

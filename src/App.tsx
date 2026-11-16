@@ -1,32 +1,37 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './styles/theme';
+import { AuthProvider } from './context/AuthContext';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { Layout } from './components/Layout';
+import { LoginPage } from './pages/LoginPage';
 
 export function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        <Routes>
-          {/* Ruta provisional de bienvenida / login */}
-          <Route path="/login" element={
-            <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-              <h1>Iniciar Sesión - A2.3 Proyecto ReactJS</h1>
-              <p>Aquí irá el formulario de autenticación contra el backend.</p>
-            </div>
-          } />
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
 
-          {/* Ruta principal temporal */}
-          <Route path="/" element={
-            <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-              <h1>Panel Principal (Privado)</h1>
-              <p>Estructura de Emotion y React Router configurada correctamente.</p>
-            </div>
-          } />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Layout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<div><h2>🏠 Diario Reciente</h2><p style={{ color: '#9ab', marginTop: '8px' }}>Bienvenido a tu registro cinematográfico.</p></div>} />
+              <Route path="peliculas" element={<div><h2>🎞️ Mis Películas</h2><p style={{ color: '#9ab', marginTop: '8px' }}>Aquí irá el CRUD completo de películas y reseñas.</p></div>} />
+              <Route path="generos" element={<div><h2>🏷️ Géneros</h2><p style={{ color: '#9ab', marginTop: '8px' }}>Aquí irá el CRUD completo de géneros.</p></div>} />
+              <Route path="perfil" element={<div><h2>👤 Mi Perfil</h2><p style={{ color: '#9ab', marginTop: '8px' }}>Datos del usuario autenticado.</p></div>} />
+            </Route>
 
-          {/* Redirección por defecto a raíz o login */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Router>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 }
